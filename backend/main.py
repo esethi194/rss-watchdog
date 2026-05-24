@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
-from database import create_tables, SessionLocal, Monitor
-from schemas import MonitorCreate, MonitorResponse
+from database import create_tables, SessionLocal, Monitor, Log
+from schemas import MonitorCreate, MonitorResponse, LogResponse
 
 app = FastAPI()
 create_tables()
@@ -31,7 +31,7 @@ def create_monitors(monitor: MonitorCreate):
     return new_monitor
 
 @app.get("/monitors/{id}", response_model=MonitorResponse)
-def get_monitors(id: int):
+def get_monitor(id: int):
     db = SessionLocal()
     monitors = db.query(Monitor).filter(Monitor.id == id).first()
     if not monitors:
@@ -49,3 +49,19 @@ def delete_monitors(id: int):
     db.commit()
     db.close()
     return {"message": f"Monitor {id} deleted"}
+
+@app.get("/logs", response_model=list[LogResponse])
+def get_logs():
+    db = SessionLocal()
+    logs = db.query(Log).all()
+    db.close()
+    return logs
+
+@app.get("/logs/{monitor_id}", response_model=list[LogResponse])
+def get_log(monitor_id: int):
+    db = SessionLocal()
+    logs = db.query(Log).filter(Log.monitor_id == monitor_id).all()
+    if not logs:
+        raise HTTPException(status_code=404, detail="Monitor not found")
+    db.close()
+    return logs

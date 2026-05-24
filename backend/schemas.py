@@ -20,4 +20,15 @@ class MonitorResponse(BaseModel):
     created_at: datetime 
 
     class Config:
-        from_atrributes = True
+        from_attributes = True
+
+class LogResponse(BaseModel):
+    id: int
+    monitor_id: int
+    ran_at: datetime
+    status: str
+    matched_entry: Optional[str] = None
+    output: Optional[str] = None
+
+    class Config:
+        from_attributes = True
