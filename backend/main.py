@@ -1,8 +1,15 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from database import create_tables, SessionLocal, Monitor, Log
 from schemas import MonitorCreate, MonitorResponse, LogResponse
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], #CHANGE TO REAL URL FOR PRODUCTION
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 create_tables()
 
 @app.get("/")
