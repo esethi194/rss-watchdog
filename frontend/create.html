@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>RSS-Watchdog: Dashboard</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+
+    <body>
+        <nav>
+            <ul>
+                <li><a href="index.html">Dashboard</a></li>
+                <li><a href="create.html">Monitor</a></li>
+                <li><a href="docs.html">Docs</a></li>
+                <li><a href="logs.html">Logs</a></li>
+            </ul>
+        </nav>
+
+        <form id="create-monitor-form">
+            <div class="form-blah">
+                <label for="name" id="name-label">Name: </label><br>
+                <input type="text" id="name" name="Name" required /><br>
+                <label for="feedURL" id="feedURL-label">FeedURL: </label><br>
+                <input type="text" id="feedURL" name="feedURL" required /><br>
+                <label for="keyword" id="keyword-label">Keyword: </label><br>
+                <input type="text" id="keyword" name="Keyword" required /><br>
+                <label for="action-type" id="action-type-label">Notification Type: </label><br>
+                <select id="action-type" name="action-type" required>
+                    <option value="Email">Email</option>
+                    <option value="Webhook">Webhook</option>
+                    <option value="Log">Log Only</option>
+                </select><br>
+                <label for="action-config" id="action-config-label">Config: </label><br>
+                <input type="text" id="action-config" name="action-config"><br>
+            </div>
+            <input type="button" id="submit-btn" value="Submit">
+        </form>
+        <script src="app.js"></script>
+    </body>
+</html>

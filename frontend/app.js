@@ -20,13 +20,21 @@ async function loadMonitors() {
         `).join(''); 
         monitorContainer.innerHTML = htmlTemplate;
 
-        } catch {
+    } catch {
         console.error("Failed to get monitors");
     }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    loadMonitors()
+    if(document.getElementById("monitor-container")){
+        loadMonitors()
+    }
+    if(document.getElementById("create-monitor-form")){
+        const action_type = document.getElementById("action-type")
+        action_type.addEventListener('change', updateConfigLabel)
+        const submit = document.getElementById("submit-btn")
+        submit.addEventListener('click', createMonitor)
+    }
 })
 
 async function deleteMonitor(id){
@@ -37,4 +45,44 @@ async function deleteMonitor(id){
         console.error("Failed to delete");
     }
     
+}
+
+function updateConfigLabel(){
+    let action_type = document.getElementById("action-type");
+    const config_input = document.getElementById("action-config");
+    const config_label = document.getElementById("action-config-label");
+    if(action_type.value == "Email"){
+        config_input.style.display = "block";
+        config_label.textContent = "Email address";
+    } else if(action_type.value == "Webhook"){
+        config_input.style.display = "block";
+        config_label.textContent = "Webhook address";
+    } else if(action_type.value == "Log"){
+        config_input.style.display = "none";
+        config_label.style.display = "none";
+    }
+}
+
+function submitForm(){
+    createMonitor();
+}
+
+async function createMonitor() {
+    
+    let name = document.getElementById("name").value;
+    let feed_url = document.getElementById("feedURL").value;
+    let keyword = document.getElementById("keyword").value;
+    let action_type = document.getElementById("action-type").value;
+    let action_config = document.getElementById("action-config").value;
+
+    try{
+        let response = await fetch(API_URL + "/monitors", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({name: name, feed_url: feed_url, keyword: keyword, action_type: action_type, action_config: action_config})
+        })
+        window.location.href = "index.html"
+    } catch{
+        console.error("monitor created");
+    }
 }
