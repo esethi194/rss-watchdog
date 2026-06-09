@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>RSS-Watchdog: Dashboard</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+
+    <body>
+        <nav>
+            <ul>
+                <li><a href="index.html">Dashboard</a></li>
+                <li><a href="create.html">Monitor</a></li>
+                <li><a href="docs.html">Docs</a></li>
+                <li><a href="logs.html">Logs</a></li>
+            </ul>
+        </nav>
+        <div>
+            <h1>RSS-Watchdog Documentation</h1>
+            <h2>What is RSS-Watchdog</h2>
+            <p>RSSWatchdog is a keyword-based RSS monitoring tool that watches RSS feeds for content you care about.</p>
+            <p>Create a monitor by providing:</p>
+            <ul>
+                <li>An RSS feed URL</li>
+                <li>A keyword</li>
+                <li>A notification method</li>
+            </ul>
+            <p>When a monitor runs, RSSWatchdog fetches the feed, scans recent entries for your keyword, and triggers the selected action if a match is found.</p>
+            <p>Supported actions:</p>
+            <ul>
+                <li>Email:- send a notification to an email address</li>
+                <li>Webhook:- send a JSON payload to a webhook URL</li>
+                <li>Log Only:- save the result without sending a notification</li>
+            </ul>
+            <h2>How it works:</h2>
+            <ol>
+                <li>Create a Monitor -> Enter a feed URL, keyword, and notification method.</li>
+                <li>Run the Monitor -> RSSWatchdog fetches the RSS feed, parses the latest entries, and checks for keyword matches.</li>
+                <li>Trigger an Action -> If a match is found, RSSWatchdog sends an email, calls a webhook, or records the result in the logs.</li>
+                <li>View Logs -> Every run is saved with a timestamp, status, and any matching entry information.</li>
+            </ol>
+            <h2>Use Cases:</h2>
+            <h4>Tech News Tracker</h4>
+            <p>Monitor a news feed like TechCrunch and get notified when articles mention keywords such as "AI" or "Python".</p>
+            <h4>Podcast Alerts</h4>
+            <p>Watch a podcast RSS feed for topics, guests, or episode keywords you're interested in.</p>
+            <h4>Software Release Monitoring</h4>
+            <p>Track release or changelog feeds for specific versions, features, or project updates.</p>
+
+            <h2>Tech Stack</h2>
+            <p>Backend: Python, FastAPI, SQLite</p>
+            <p>Frontend: HTML, CSS, Vanilla JavaScript</p>
+            <p>Railway, Vercel</p>
+        </div>
+    </body>
+</html>

@@ -25,6 +25,27 @@ async function loadMonitors() {
     }
 }
 
+async function loadLogs() {
+    try {
+        let response = await fetch(API_URL + "/logs");
+        let data = await response.json();
+        const logContainer = document.getElementById("table-body")
+
+        const htmlTemplate = data.map(log => `
+        <tr>
+            <td>${log.monitor_id}</td>
+            <td>${log.ran_at}</td>
+            <td>${log.status}</td>
+            <td>${log.matched_entry}</td>
+        </tr>
+        `).join(''); 
+        logContainer.innerHTML = htmlTemplate;
+
+    } catch {
+        console.error("Failed to get logs");
+    }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     if(document.getElementById("monitor-container")){
         loadMonitors()
@@ -34,6 +55,9 @@ document.addEventListener("DOMContentLoaded", () => {
         action_type.addEventListener('change', updateConfigLabel)
         const submit = document.getElementById("submit-btn")
         submit.addEventListener('click', createMonitor)
+    }
+    if(document.getElementById("table-body")){
+        loadLogs()
     }
 })
 
@@ -86,3 +110,4 @@ async function createMonitor() {
         console.error("monitor created");
     }
 }
+
